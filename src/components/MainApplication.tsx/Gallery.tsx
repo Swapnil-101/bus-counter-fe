@@ -62,123 +62,120 @@ const images: ImageData[] = [
 
 const itemsPerPage = 4;
 
-const Gallery: React.FC = () => {
-    const [selectedImage, setSelectedImage] = useState<ImageData | null>(null);
+interface Gallery {
+    setMainPage: any;
+    frames: any;
+}
+
+
+const Gallery: React.FC<GalleryProps> = ({ setMainPage, frames }) => {
+    const [selectedImage, setSelectedImage] = useState<Frame | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
+    setMainPage(currentPage);
+  
     const containerRef = useRef<HTMLDivElement>(null);
-
-    const handleImageClick = (image: ImageData) => {
-        setSelectedImage(image);
+  
+    const handleImageClick = (frame: Frame) => {
+      setSelectedImage(frame);
     };
-
+  
     const handleCloseFullscreen = () => {
-        setSelectedImage(null);
+      setSelectedImage(null);
     };
-
+  
     const handlePageChange = (page: number) => {
-        setCurrentPage(page);
+      setCurrentPage(page);
     };
-
+  
     useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (
-                selectedImage &&
-                containerRef.current &&
-                !containerRef.current.contains(event.target as Node)
-            ) {
-                handleCloseFullscreen();
-            }
-        };
-
-        const handlePageClick = (event: MouseEvent) => {
-            const target = event.target as HTMLElement;
-            if (target.tagName === 'BUTTON' && target.classList.contains('pagination-button')) {
-                const page = parseInt(target.textContent || '1', 10);
-                handlePageChange(page);
-            }
-        };
-
-        document.addEventListener('click', handleClickOutside);
-        document.addEventListener('click', handlePageClick);
-
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-            document.removeEventListener('click', handlePageClick);
-        };
+      const handleClickOutside = (event: MouseEvent) => {
+        if (
+          selectedImage &&
+          containerRef.current &&
+          !containerRef.current.contains(event.target as Node)
+        ) {
+          handleCloseFullscreen();
+        }
+      };
+  
+      const handlePageClick = (event: MouseEvent) => {
+        const target = event.target as HTMLElement;
+        if (
+          target.tagName === 'BUTTON' &&
+          target.classList.contains('pagination-button')
+        ) {
+          const page = parseInt(target.textContent || '1', 10);
+          handlePageChange(page);
+        }
+      };
+  
+      document.addEventListener('click', handleClickOutside);
+      document.addEventListener('click', handlePageClick);
+  
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener('click', handlePageClick);
+      };
     }, [selectedImage, containerRef, handlePageChange]);
-
-    const totalPages = Math.ceil(images.length / itemsPerPage);
+  
+    const totalPages = Math.ceil(frames.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    const paginatedImages = images.slice(startIndex, endIndex);
-
+    const paginatedFrames = frames.slice(startIndex, endIndex);
+  
     return (
-        <div>
+      <div>
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 p-4"
+          ref={containerRef}
+        >
+          {paginatedFrames.map((frame) => (
             <div
-                className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 p-4"
-                ref={containerRef}
+              key={frame.id}
+              className="group cursor-pointer relative"
+              onClick={() => handleImageClick(frame)}
             >
-                {paginatedImages.map((image) => (
-                    <div
-                        key={image.id}
-                        className="group cursor-pointer relative"
-                        onClick={() => handleImageClick(image)}
-                    >
-                        <img
-                            src={image.src}
-                            alt={`Image ${image.id}`}
-                            className="w-full h-48 object-cover rounded-lg transition-transform transform scale-100 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
-                                View
-                            </button>
-                        </div>
-                    </div>
-                ))}
-
-                {selectedImage && (
-                    <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center">
-                        <div className="max-w-screen-xl mx-auto fullscreen-image-container">
-                            <img
-                                src={selectedImage.src}
-                                alt={`Image ${selectedImage.id}`}
-                                className="max-w-full max-h-full"
-                            />
-                            <button
-                                className="absolute top-0 right-0 m-4 text-white hover:text-gray-300 focus:outline-none"
-                                onClick={handleCloseFullscreen}
-                            >
-                                Close
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {/* <div className="flex justify-center mt-4">
-                <Pagination/>
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index + 1}
-                        className={`mx-2 px-3 py-2 rounded-full pagination-button ${currentPage === index + 1 ? 'bg-gray-700 text-white' : 'bg-gray-300'
-                            }`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div> */}
-
+              <img
+                src={`data:image/png;base64, ${frame.frame}`}
+                alt={`Image ${frame.id}`}
+                className="w-full h-48 object-cover rounded-lg transition-transform transform scale-100 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                <button className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                  View
+                </button>
+              </div>
             </div>
-
-            <div className="flex justify-center mt-4">
-                <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+          ))}
+  
+          {selectedImage && (
+            <div className="fixed inset-0 z-50 overflow-hidden bg-black bg-opacity-75 flex items-center justify-center">
+              <div className="max-w-screen-xl mx-auto fullscreen-image-container">
+                <img
+                  src={`data:image/png;base64, ${selectedImage.frame}`}
+                  alt={`Image ${selectedImage.id}`}
+                  className="max-w-full max-h-full"
+                />
+                <button
+                  className="absolute top-0 right-0 m-4 text-white hover:text-gray-300 focus:outline-none"
+                  onClick={handleCloseFullscreen}
+                >
+                  Close
+                </button>
+              </div>
             </div>
+          )}
         </div>
-
+  
+        <div className="flex justify-center mt-4">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      </div>
     );
-};
-
-
-
-export default Gallery;
+  };
+  
+  export default Gallery;

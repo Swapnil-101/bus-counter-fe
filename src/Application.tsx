@@ -25,7 +25,7 @@ const Application = () => {
 
                 // Handle the API response
                 console.log('API Response:', response.data);
-
+                window.location.href = "#/app-main"
                 // Add logic to handle the response as needed
 
             } catch (error) {
