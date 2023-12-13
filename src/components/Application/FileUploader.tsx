@@ -1,6 +1,10 @@
 import React, { ChangeEvent, DragEvent, useState, useRef } from 'react';
 
-const FileUploader: React.FC = () => {
+interface FileUploaderProps {
+    setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
+}
+
+const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [previewSrc, setPreviewSrc] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -19,12 +23,14 @@ const FileUploader: React.FC = () => {
         e.preventDefault();
         setIsDragging(false);
         const file = e.dataTransfer.files[0];
+        setSelectedFile(file); // Set the selected file
         displayPreview(file);
     };
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            setSelectedFile(file); // Set the selected file
             displayPreview(file);
         }
     };
@@ -59,7 +65,7 @@ const FileUploader: React.FC = () => {
                     onChange={handleFileChange}
                     ref={fileInputRef}
                 />
-                <div className="text-center">
+                <div className="text-center" onClick={handleLoadButtonClick}>
                     <img
                         className="mx-auto h-12 w-12"
                         src="https://www.svgrepo.com/show/357902/image-upload.svg"
@@ -73,15 +79,16 @@ const FileUploader: React.FC = () => {
                             <input id="file-upload" name="file-upload" type="file" className="sr-only" />
                         </label>
                     </h3>
-                    <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+                    <p className="mt-1 text-xs text-gray-500">MP4,
+                        MOV,
+                        WMV,
+                        AVI,
+                        AVCHD,</p>
                 </div>
                 <img src={previewSrc || ''} className={`mt-4 mx-auto max-h-40 ${!previewSrc && 'hidden'}`} />
 
             </div>
         </div>
-
-
-
     );
 };
 

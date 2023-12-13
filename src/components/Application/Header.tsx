@@ -5,11 +5,11 @@ const Header = () => {
     return (
 
 
-        <div className="flex justify-between items-center md:mx-[2rem] mx-[1rem] my-8 mb-[2rem]">
+        <div className="flex justify-between items-center md:mx-[rem] mx-[5rem] my-8 mb-[2rem]">
 
             <Link to="/">
                 <div>
-                    <h1 className="text-[2.5rem] text-[#3388CC] font-semibold  font-roboto flex justify-center mb-4 mt-[1rem]">CamerGpt</h1>
+                    <h1 className="text-[2.5rem] text-[#3388CC] font-semibold  font-roboto flex justify-center mb-4 mt-[1rem]">Bus Counter</h1>
                 </div>
 
             </Link>
