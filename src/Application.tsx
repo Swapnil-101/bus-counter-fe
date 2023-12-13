@@ -25,7 +25,7 @@ const Application = () => {
 
                 // Handle the API response
                 console.log('API Response:', response.data);
-                window.location.href = "#/app-main"
+                window.location.href = "#/app-main";
                 // Add logic to handle the response as needed
 
             } catch (error) {
@@ -54,7 +54,12 @@ const Application = () => {
                                 className="px-4 py-2 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"
                                 onClick={handleLoadButtonClick}
                             >
-                                {loading ? 'Loading...' : 'Load'}
+                                {loading ? (
+                                    <div className="flex items-center">
+                                        <div className="w-5 h-5 border-t-2 border-blue-500 border-solid rounded-full animate-spin"></div>
+                                        <span className="ml-2">Loading...</span>
+                                    </div>
+                                ) : 'Load'}
                             </button>
                             <button
                                 className="px-4 py-2 text-white transition-colors duration-300 transform bg-gray-700 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600"

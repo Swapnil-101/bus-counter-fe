@@ -33,7 +33,7 @@ const StatisticCard: React.FC<CardProps> = ({ title, value, bgColor, icon, dange
     };
 
     return (
-        <div className={`flex items-center bg-white border rounded-sm overflow-hidden shadow ${danger}`}>
+        <div className={`flex items-center ${danger} border rounded-sm overflow-hidden shadow `}>
             <div className={`p-4 ${bgColor}`}>{icon}</div>
             <div className="px-4 text-gray-700 ">
                 <h3 className="text-sm tracking-wider">{title}</h3>
