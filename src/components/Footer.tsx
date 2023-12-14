@@ -2,7 +2,7 @@
 
 const Footer = () => {
     return (
-        <div className="relative bg-deep-purple-accent-400 ">
+        <div className="relative bg-deep-purple-accent-400 mt-[5rem]">
             <svg
                 className="absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 text-deep-purple-accent-400"
                 preserveAspectRatio="none"
