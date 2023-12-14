@@ -70,12 +70,14 @@ interface Gallery {
 
 const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<any>(1);
 
-  useEffect(() => {
-    setMainPage(currentPage);
-  }, [currentPage]);
-  setMainPage(currentPage);
+  console.log("current", currentPage)
+
+  // useEffect(() => {
+
+  // }, [currentPage]);
+  // // setMainPage(currentPage);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -88,6 +90,7 @@ const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
   };
 
   const handlePageChange = (page: number) => {
+    setMainPage(page);
     setCurrentPage(page);
   };
 
@@ -122,7 +125,7 @@ const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
     };
   }, [selectedImage, containerRef, handlePageChange]);
 
-  const totalPages = Math.ceil(currentPage);
+  const totalPages = Math.ceil(10);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedFrames = frames.slice(startIndex, endIndex);
@@ -130,7 +133,7 @@ const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
   return (
     <div>
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8 p-4"
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-8"
         ref={containerRef}
       >
         {frames.map((frame: any) => (
@@ -144,8 +147,11 @@ const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
               alt={`Image ${frame.id}`}
               className="w-full h-48 object-cover rounded-lg transition-transform transform scale-100 group-hover:scale-105"
             />
-            <h1>Count of People: {frame.count_of_people}</h1>
-            <h1>Time Stamp: {frame.timestamp}</h1>
+            <div className='flex justify-between my-[0.8rem]'>
+              <h1>Count of People: {frame.count_of_people}</h1>
+              <h1>Time Stamp: {frame.timestamp}</h1>
+            </div>
+
 
             <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <button className="bg-white text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">

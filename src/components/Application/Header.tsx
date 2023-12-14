@@ -5,7 +5,7 @@ const Header = () => {
     return (
 
 
-        <div className="flex justify-between items-center md:mx-[rem] mx-[5rem] my-8 mb-[2rem]">
+        <div className="flex justify-between items-center md:mx-[rem]  my-8 mb-[2rem]">
 
             <Link to="/">
                 <div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from "./components/Application/Header";
 import Gallery from "./components/MainApplication.tsx/Gallery";
 import StatsContainer from "./components/MainApplication.tsx/StatsContainer";
@@ -52,8 +52,8 @@ const MainApplication = () => {
     return (
         <main className='mx-[8rem]'>
             <Header />
-            <div className="flex flex-col gap-[4rem] mx-[3.4rem]">
-                <StatsContainer />
+            <div className="flex flex-col gap-[4rem]">
+                <StatsContainer frames={frames} />
                 {loading ? (
                     // Render a loader or spinner while data is being fetched
                     <div>Loading...</div>
@@ -66,4 +66,3 @@ const MainApplication = () => {
 };
 
 export default MainApplication;
-    

@@ -85,7 +85,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
                         AVI,
                         AVCHD,</p>
                 </div>
-                <img src={previewSrc || ''} className={`mt-4 mx-auto max-h-40 ${!previewSrc && 'hidden'}`} />
+                {/* <img src={previewSrc || ''} className={`mt-4 mx-auto max-h-40 ${!previewSrc && 'hidden'}`} /> */}
 
             </div>
         </div>
