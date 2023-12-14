@@ -65,28 +65,35 @@ const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
                     onChange={handleFileChange}
                     ref={fileInputRef}
                 />
-                <div className="text-center" onClick={handleLoadButtonClick}>
-                    <img
-                        className="mx-auto h-12 w-12"
-                        src="https://www.svgrepo.com/show/357902/image-upload.svg"
-                        alt=""
-                    />
-                    <h3 className=" mt-2 text-sm font-medium text-gray-900">
-                        <label htmlFor="file-upload" className="relative cursor-pointer">
-                            <span>Drag and drop</span>
-                            <span className="text-indigo-600"> or browse</span>
-                            <span> to upload</span>
-                            <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                        </label>
-                    </h3>
-                    <p className="mt-1 text-xs text-gray-500">MP4,
-                        MOV,
-                        WMV,
-                        AVI,
-                        AVCHD,</p>
-                </div>
+                {previewSrc ? (
+                    // Display this block when a video is uploaded
+                    <div className="text-center">
+                        <p className="text-indigo-600 font-medium">Video Uploaded!</p>
+                    </div>
+                ) : (
+                    // Display this block when no video is uploaded
+                    <div className="text-center" onClick={handleLoadButtonClick}>
+                        <img
+                            className="mx-auto h-12 w-12"
+                            src="https://www.svgrepo.com/show/357902/image-upload.svg"
+                            alt=""
+                        />
+                        <h3 className=" mt-2 text-sm font-medium text-gray-900">
+                            <label htmlFor="file-upload" className="relative cursor-pointer">
+                                <span>Drag and drop</span>
+                                <span className="text-indigo-600"> or browse</span>
+                                <span> to upload</span>
+                                <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+                            </label>
+                        </h3>
+                        <p className="mt-1 text-xs text-gray-500">MP4,
+                            MOV,
+                            WMV,
+                            AVI,
+                            AVCHD,</p>
+                    </div>
+                )}
                 {/* <img src={previewSrc || ''} className={`mt-4 mx-auto max-h-40 ${!previewSrc && 'hidden'}`} /> */}
-
             </div>
         </div>
     );
