@@ -2,11 +2,13 @@ import React, { ChangeEvent, DragEvent, useState, useRef } from 'react';
 
 interface FileUploaderProps {
     setSelectedFile: React.Dispatch<React.SetStateAction<File | null>>;
+    setPreviewSrc: any;
+    previewSrc: any;
 }
 
-const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
+const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile, setPreviewSrc, previewSrc }) => {
     const [isDragging, setIsDragging] = useState(false);
-    const [previewSrc, setPreviewSrc] = useState<string | null>(null);
+    const [fileName, setFileName] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -41,6 +43,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
         reader.onload = () => {
             setPreviewSrc(reader.result as string);
         };
+        setFileName(file.name); // Set the file name
     };
 
     const handleLoadButtonClick = () => {
@@ -53,7 +56,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
     return (
         <div className=''>
             <div
-                className={`md:w-[600px] md:h-[400px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 ${isDragging ? 'border-indigo-600 flex justify-center items-center' : 'flex justify-center items-center'
+                className={`md:w-[600px] md:h-[200px] relative border-2 border-gray-300 border-dashed rounded-lg p-6 ${isDragging ? 'border-indigo-600 flex justify-center items-center' : 'flex justify-center items-center'
                     }`}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
@@ -69,6 +72,7 @@ const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
                     // Display this block when a video is uploaded
                     <div className="text-center">
                         <p className="text-indigo-600 font-medium">Video Uploaded!</p>
+                        <p className="text-sm text-gray-500">{fileName}</p>
                     </div>
                 ) : (
                     // Display this block when no video is uploaded
@@ -93,7 +97,6 @@ const FileUploader: React.FC<FileUploaderProps> = ({ setSelectedFile }) => {
                             AVCHD,</p>
                     </div>
                 )}
-                {/* <img src={previewSrc || ''} className={`mt-4 mx-auto max-h-40 ${!previewSrc && 'hidden'}`} /> */}
             </div>
         </div>
     );

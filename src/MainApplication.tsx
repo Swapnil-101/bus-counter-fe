@@ -3,6 +3,7 @@ import Header from "./components/Application/Header";
 import Gallery from "./components/MainApplication.tsx/Gallery";
 import StatsContainer from "./components/MainApplication.tsx/StatsContainer";
 import axios from 'axios';
+import Footer from './components/Footer';
 
 const MainApplication = () => {
     const [frames, setFrames] = useState([]);
@@ -27,9 +28,17 @@ const MainApplication = () => {
 
     useEffect(() => {
         setLoading(true);
+        const video_name = localStorage.getItem('video_name');
+
+        // Extract filename without extension
+        const filenameWithoutExtension = video_name?.replace(/\.[^/.]+$/, '');
+
+        console.log(filenameWithoutExtension);
+
+
 
         // Define the API endpoint with the current page
-        const apiUrl = `http://3.6.112.225:8000/get_frames?page=${mainPage}`;
+        const apiUrl = `http://3.6.112.225:8000/get_frames?page=${mainPage}&name=${filenameWithoutExtension}`;
 
         // Make the API call
         axios.get(apiUrl)
@@ -61,6 +70,8 @@ const MainApplication = () => {
                     <Gallery frames={frames} setMainPage={setMainPage} />
                 )}
             </div>
+
+            <Footer />
         </main>
     );
 };
