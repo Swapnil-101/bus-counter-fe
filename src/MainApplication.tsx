@@ -67,7 +67,7 @@ const MainApplication = () => {
                     // Render a loader or spinner while data is being fetched
                     <div>Loading...</div>
                 ) : (
-                    <Gallery frames={frames} setMainPage={setMainPage} />
+                    <Gallery frames={frames} setMainPage={setMainPage}  />
                 )}
             </div>
 

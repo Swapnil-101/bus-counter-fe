@@ -21,7 +21,7 @@ const Application = () => {
         setPassengerCountAvailable(!!storedTotalPassengers);
     }, []);
 
-    const datafile = selectedFile?.name ;
+    const datafile = selectedFile?.name;
     localStorage.setItem('video_name', datafile);
     // localStorage.setItem('video_name', selectedFile.name);
 
@@ -47,6 +47,8 @@ const Application = () => {
 
                 // Handle the API response
                 console.log('API Response:', response.data);
+                localStorage.setItem('video_response', JSON.stringify(response.data));
+
                 setDataAvailable(true); // Set the state variable indicating data availability
                 setShowLoader(true);
 

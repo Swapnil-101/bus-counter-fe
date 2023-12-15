@@ -59,14 +59,14 @@ const StatisticCard: React.FC<CardProps> = ({
                                 type="text"
                                 value={editedValue}
                                 onChange={handleChange}
-                                className="mr-2 border-b border-gray-500 outline-none focus:border-blue-500"
+                                className="mr-2 border-b border-gray-500 outline-none focus:border-blue-500 w-[5rem]"
                             />
                             <button onClick={handleSave} className="text-blue-500 cursor-pointer">
                                 Save
                             </button>
-                            <button onClick={handleCancel} className="text-red-500 cursor-pointer ml-2">
+                            {/* <button onClick={handleCancel} className="text-red-500 cursor-pointer ml-2">
                                 Cancel
-                            </button>
+                            </button> */}
                         </div>
                     ) : (
                         <p className={`text-2xl cursor-pointer ${blinking ? 'blinking' : ''}`} onClick={handleEdit}>

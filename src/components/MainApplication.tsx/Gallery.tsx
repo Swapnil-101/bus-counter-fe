@@ -72,12 +72,21 @@ const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
   const [selectedImage, setSelectedImage] = useState<any | null>(null);
   const [currentPage, setCurrentPage] = useState<any>(1);
 
+  const storedDatatwo = localStorage.getItem("video_response") || '{}';
+  const [totalPage, setTotalPage] = useState<any>(JSON.parse(storedDatatwo))
+
+  // setTotalPage(storedDatatwo)
+  console.log("dss",totalPage)
+
+
   console.log("current", currentPage)
 
   // useEffect(() => {
 
   // }, [currentPage]);
   // // setMainPage(currentPage);
+
+  
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -125,7 +134,7 @@ const Gallery: React.FC<Gallery> = ({ setMainPage, frames }) => {
     };
   }, [selectedImage, containerRef, handlePageChange]);
 
-  const totalPages = Math.ceil(10);
+  const totalPages = Math.ceil(totalPage?.total_pages);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedFrames = frames.slice(startIndex, endIndex);
