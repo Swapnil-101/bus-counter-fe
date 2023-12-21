@@ -4,6 +4,7 @@ import FileUploader from './components/Application/FileUploader';
 import FormManual from './components/Application/FormManual';
 import Header from './components/Application/Header';
 import Footer from './components/Footer';
+import ErrorAlert from './components/Alert/ErrorAlert';
 
 const Application = () => {
     const [selectedFile, setSelectedFile] = useState<any>(null);
@@ -13,6 +14,8 @@ const Application = () => {
     const [previewSrc, setPreviewSrc] = useState<string | null>(null);
     const [passengerCount, setPassengerCount] = useState<number | ''>(''); // State for the number of passengers
     const [showLoader, setShowLoader] = useState(false);
+
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         // Check if passengerCount is available in localStorage
@@ -34,10 +37,14 @@ const Application = () => {
             formData.append('video', selectedFile);
             formData.append('video_name', selectedFile.name);
 
-
             try {
                 // Set loading to true before making the API call
                 setLoading(true);
+
+                // Simulating an API error (replace this condition with your own)
+                if (selectedFile.name === 'simulate_error.mp4') {
+                    throw new Error('Simulated API error: Video name is invalid.');
+                }
 
                 const response = await axios.post('http://3.6.112.225:8000/video_feed', formData, {
                     headers: {
@@ -58,8 +65,12 @@ const Application = () => {
                     // Add logic to handle the response as needed
                 }, 7000);
 
-            } catch (error) {
+            } catch (error: any) {
                 console.error('API Error:', error);
+                setError('An error occurred. Please try again.');
+                setTimeout(() => {
+                    setError(null);
+                }, 3000);
                 // Handle error as needed
 
             } finally {
@@ -69,9 +80,17 @@ const Application = () => {
         }
     };
 
+
+    // const closeErrorAlert = () => {
+    //     setError(null);
+    // };
+
     return (
         <main className='mx-[8rem]'>
             <Header />
+            <div className='flex justify-end'>
+                {error && <ErrorAlert message={"asda"} />}
+            </div>
             <div className='flex  mt-[4rem]'>
                 <div className='flex justify-between items-center gap-[2rem] flex-wrap '>
                     <div className='mt-[3.5rem]'>
