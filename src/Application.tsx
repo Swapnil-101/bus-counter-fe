@@ -67,7 +67,7 @@ const Application = () => {
 
             } catch (error: any) {
                 console.error('API Error:', error);
-                setError('An error occurred. Please try again.');
+                setError(error);
                 setTimeout(() => {
                     setError(null);
                 }, 3000);
